@@ -1,12 +1,15 @@
-#!/usr/bin/env zsh
-
-SEQAN_SRC=~/develope/seqan-src
+#!/usr/bin/env bash
 
 ./clean.sh
+. ./configure.sh
 
-for compiler in "g++-6" "clang++-3.9" "icpc-17"; do
-   for simdext in "sse4" "avx2"; do
-      for simd in "umesimd" "seqansimd"; do
+echo "BENCH_COMPILERS: $BENCH_COMPILERS"
+echo "BENCH_SIMD: $BENCH_SIMD"
+echo "BENCH_SIMD_BACKENDS: $BENCH_SIMD_BACKENDS"
+
+for compiler in "${BENCH_COMPILERS[@]}"; do
+   for simdext in "${BENCH_SIMD[@]}"; do
+      for simd in "${BENCH_SIMD_BACKENDS[@]}"; do
          build="${compiler}_${simdext}_${simd}"
          echo "build $build"
 

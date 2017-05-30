@@ -10,24 +10,16 @@ else ()
   set(CMAKE_CXX_FLAGS "-std=c++14")
 endif ()
 
-message (STATUS "SIMD: ${SIMD}")
-if (SIMD MATCHES "SSE4")
-  set (SEQAN_CXX_FLAGS "${SEQAN_CXX_FLAGS} -msse4")
-  message (STATUS "SIMD: ${SEQAN_CXX_FLAGS} build")
-elseif (SIMD MATCHES "AVX2")
-  if (CMAKE_CXX_COMPILER_ID MATCHES "Intel")
-    set (SEQAN_CXX_FLAGS "${SEQAN_CXX_FLAGS} -xCORE-AVX2")
-  else()
-    set (SEQAN_CXX_FLAGS "${SEQAN_CXX_FLAGS} -mavx2")
-  endif()
-  message (STATUS "SIMD: ${SEQAN_CXX_FLAGS} build")
-endif()
-
 # require sse4
-set(SEQAN_ARCH_SSE4 ON)
+# set(SEQAN_ARCH_SSE4 ON)
 
 find_package (OpenMP)
 find_package (SeqAn REQUIRED)
+include (SeqAnSimdUtility)
+
+message (STATUS "SIMD: ${SIMD}")
+set (SEQAN_CXX_FLAGS "${SEQAN_CXX_FLAGS} ${SEQAN_SIMD_${SIMD}_OPTIONS}")
+message (STATUS "SIMD: ${SEQAN_CXX_FLAGS} build")
 
 # Was SeqAn included?
 if (NOT (SEQAN_FOUND))
