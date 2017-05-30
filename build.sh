@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+
+# We need zsh because bash does not have an easy ${simd:u} (uppercase string) method
 
 ./clean.sh
 . ./configure.sh
