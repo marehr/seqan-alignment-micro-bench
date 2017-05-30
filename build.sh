@@ -1,6 +1,4 @@
-#!/usr/bin/env zsh
-
-# We need zsh because bash does not have an easy ${simd:u} (uppercase string) method
+#!/usr/bin/env bash
 
 ./clean.sh
 . ./configure.sh
@@ -13,15 +11,17 @@ for compiler in "${BENCH_COMPILERS[@]}"; do
    for simdext in "${BENCH_SIMD[@]}"; do
       for simd in "${BENCH_SIMD_BACKENDS[@]}"; do
          build="${compiler}_${simdext}_${simd}"
+         simd_uppercase=$(echo "$simd" | tr '[:lower:]' '[:upper:]')
+         simdext_uppercase=$(echo "$simdext" | tr '[:lower:]' '[:upper:]')
          echo "build $build"
 
          mkdir -p build_$build
          cd build_$build
 
          cmake ../ -DCMAKE_CXX_COMPILER="$compiler" \
-               -DSEQAN_CXX_FLAGS="-DSEQAN_${simd:u}_ENABLED=1 -g" \
+               -DSEQAN_CXX_FLAGS="-DSEQAN_${simd_uppercase}_ENABLED=1 -g" \
                -DCMAKE_BUILD_TYPE=Release \
-               -DSIMD="${simdext:u}" \
+               -DSIMD="${simdext_uppercase}" \
                -DCMAKE_MODULE_PATH=${SEQAN_SRC}/util/cmake \
                -DCMAKE_PREFIX_PATH=${SEQAN_SRC}/util/cmake \
                -DCMAKE_INCLUDE_PATH=${SEQAN_SRC}/include
