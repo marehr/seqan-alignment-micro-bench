@@ -18,7 +18,7 @@ find_package (SeqAn REQUIRED)
 include (SeqAnSimdUtility)
 
 message (STATUS "SIMD: ${SIMD}")
-set (SEQAN_CXX_FLAGS "${SEQAN_CXX_FLAGS} ${SEQAN_SIMD_${SIMD}_OPTIONS}")
+set (SEQAN_CXX_FLAGS "${SEQAN_CXX_FLAGS}" ${SEQAN_SIMD_${SIMD}_OPTIONS})
 message (STATUS "SIMD: ${SEQAN_CXX_FLAGS} build")
 
 # Was SeqAn included?
