@@ -17,14 +17,12 @@ find_package (OpenMP)
 find_package (SeqAn REQUIRED)
 include (SeqAnSimdUtility)
 
-message (STATUS "SIMD: ${SIMD}")
-set (SEQAN_CXX_FLAGS "${SEQAN_CXX_FLAGS}" ${SEQAN_SIMD_${SIMD}_OPTIONS})
-message (STATUS "SIMD: ${SEQAN_CXX_FLAGS} build")
-
 # Was SeqAn included?
 if (NOT (SEQAN_FOUND))
     message (FATAL_ERROR "SeqAn not found")
 endif ()
+
+message (STATUS "SIMD: ${SIMD}")
 
 # Set Release mode
 set(CMAKE_BUILD_TYPE "Release")
@@ -35,6 +33,9 @@ include_directories (${SEQAN_INCLUDE_DIRS})
 # Add definitions set by find_package (SeqAn).
 add_definitions (${SEQAN_DEFINITIONS})
 
+# Add SIMD options
+add_compile_options(${SEQAN_SIMD_${SIMD}_OPTIONS})
+
 # Add CXX flags found by find_package (SeqAn).
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS} ")
 
@@ -42,3 +43,6 @@ set(SOURCE_FILES benchmark_openmp.cpp)
 add_executable(benchmark_openmp ${SOURCE_FILES})
 
 target_link_libraries(benchmark_openmp ${ZLIB_LIBRARIES} pthread)
+
+get_property(SIMD_COMPILE_OPTIONS TARGET benchmark_openmp PROPERTY COMPILE_OPTIONS)
+message (STATUS "SIMD: ${SIMD_COMPILE_OPTIONS} build")
