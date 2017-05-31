@@ -28,7 +28,7 @@ for compiler in "${BENCH_COMPILERS[@]}"; do
 
          cd ..
 
-         if [ "$simdext" == "none" ]; then
+         if [ "$simdext" == "nosimd" ]; then
             break
          fi
       done

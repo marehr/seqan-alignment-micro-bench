@@ -15,7 +15,7 @@ for compiler in "${BENCH_COMPILERS[@]}"; do
          "build_${build}/benchmark_openmp" 1 "$BENCH_NUMBER_OF_ALIGNMENTS" | tee "results_${build}"
          echo
 
-         if [ "$simdext" == "none" ]; then
+         if [ "$simdext" == "nosimd" ]; then
             break
          fi
       done
