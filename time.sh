@@ -12,7 +12,11 @@ for compiler in "${BENCH_COMPILERS[@]}"; do
          build="${compiler}_${simdext}_${simd}"
          echo "time $build"
 
-         "build_${build}/benchmark_openmp" 1 1000 | tee "results_${build}"
+         "build_${build}/benchmark_openmp" 1 "$BENCH_NUMBER_OF_ALIGNMENTS" | tee "results_${build}"
+
+         if [ "$simdext" == "none" ]; then
+            break
+         fi
       done
    done
 done

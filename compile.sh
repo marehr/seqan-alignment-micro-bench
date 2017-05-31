@@ -15,6 +15,10 @@ for compiler in "${BENCH_COMPILERS[@]}"; do
          cd build_$build
          make VERBOSE=1
          cd ..
+
+         if [ "$simdext" == "none" ]; then
+            break
+         fi
       done
    done
 done

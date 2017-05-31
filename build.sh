@@ -27,6 +27,10 @@ for compiler in "${BENCH_COMPILERS[@]}"; do
                -DCMAKE_INCLUDE_PATH=${SEQAN_SRC}/include
 
          cd ..
+
+         if [ "$simdext" == "none" ]; then
+            break
+         fi
       done
    done
 done
