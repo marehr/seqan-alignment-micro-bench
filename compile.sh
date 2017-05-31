@@ -2,9 +2,9 @@
 
 . ./configure.sh
 
-echo "BENCH_COMPILERS: $BENCH_COMPILERS"
-echo "BENCH_SIMD: $BENCH_SIMD"
-echo "BENCH_SIMD_BACKENDS: $BENCH_SIMD_BACKENDS"
+echo "BENCH_COMPILERS: ${BENCH_COMPILERS[*]}"
+echo "BENCH_SIMD: ${BENCH_SIMD[*]}"
+echo "BENCH_SIMD_BACKENDS: ${BENCH_SIMD_BACKENDS[*]}"
 
 for compiler in "${BENCH_COMPILERS[@]}"; do
    for simdext in "${BENCH_SIMD[@]}"; do
