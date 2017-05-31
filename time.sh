@@ -9,11 +9,15 @@ echo "BENCH_SIMD_BACKENDS: ${BENCH_SIMD_BACKENDS[*]}"
 for compiler in "${BENCH_COMPILERS[@]}"; do
    for simdext in "${BENCH_SIMD[@]}"; do
       for simd in "${BENCH_SIMD_BACKENDS[@]}"; do
-         build="${compiler}_${simdext}_${simd}"
-         echo "benchmark $build"
+         threads="1"
+         while [ $threads -le $BENCH_MAX_THREADS ]; do
+            build="${compiler}_${simdext}_${simd}"
+            echo "benchmark $build:$threads"
 
-         "build_${build}/benchmark_openmp" 1 "$BENCH_NUMBER_OF_ALIGNMENTS" | tee "results_${build}"
-         echo
+            "build_${build}/benchmark_openmp" "$threads" "$BENCH_NUMBER_OF_ALIGNMENTS" | tee "results_${build}"
+            echo
+            threads=$[$threads*2]
+         done
 
          if [ "$simdext" == "nosimd" ]; then
             break

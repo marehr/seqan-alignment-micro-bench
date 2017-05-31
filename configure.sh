@@ -5,3 +5,4 @@ export BENCH_SIMD=("nosimd" "sse4" "avx2" "avx512_knl")
 export BENCH_SIMD_BACKENDS=("umesimd" "seqansimd")
 
 export BENCH_NUMBER_OF_ALIGNMENTS=1000
+export BENCH_MAX_THREADS=128
